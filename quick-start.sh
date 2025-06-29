@@ -33,12 +33,12 @@ log "Creating local Poetry virtualenv …"
 poetry config virtualenvs.in-project true
 log "Updating lock file if needed …"
 poetry lock
-poetry install --no-root --no-interaction
+poetry install --no-root --no-interaction --with dev
 poetry sync
 
 # 3️⃣ Generate gRPC stubs
 log "Generating gRPC stubs …"
-poetry run python -m grpc_tools.protoc -I proto --python_out=. --grpc_python_out=. proto/userprofile.proto proto/banktransaction.proto
+poetry run python -m grpc_tools.protoc -I proto --python_out=proto --grpc_python_out=proto proto/userprofile.proto proto/banktransaction.proto
 
 # 4️⃣ Build and run stack
 log "Launching Docker stack …"

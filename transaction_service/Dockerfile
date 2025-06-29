@@ -13,15 +13,18 @@ RUN pip install --no-cache-dir poetry
 COPY pyproject.toml poetry.lock* ./
 
 # ---- Install Python deps (no dev deps) ----
-RUN apk add --no-cache --virtual .build-deps build-base python3-dev postgresql-dev \
+RUN apk add --no-cache --virtual .build-deps build-base python3-dev postgresql-dev zlib-dev\
     && poetry install --no-root --only main \
     && apk del .build-deps
+
+ENV PATH="/app/.venv/bin:$PATH"
 
 # ---- Copy application code ----
 COPY transaction_service ./transaction_service
 COPY common ./common
 COPY proto ./proto
 COPY transaction_service/entrypoint.sh .
+COPY alembic.ini ./
 
 EXPOSE 50052 9100
 

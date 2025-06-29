@@ -19,6 +19,9 @@ strawberry-graphql              = { extras = ["fastapi"], version = "^0.233" }
 # ------------- gRPC / Protobuf -------------
 grpcio                          = "^1.64"
 
+# Database migrations
+alembic                        = "^1.13"
+
 # ------------- Async infra -------------
 redis                           = "^5.0"
 aiokafka                        = "^0.10"
