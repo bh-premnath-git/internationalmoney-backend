@@ -1,0 +1,29 @@
+FROM python:3.12-alpine AS base
+
+ENV PYTHONUNBUFFERED=1 \
+    POETRY_VIRTUALENVS_IN_PROJECT=true \
+    POETRY_NO_INTERACTION=1
+
+WORKDIR /app
+
+# ---- Install Poetry ----
+RUN pip install --no-cache-dir poetry
+
+# ---- Copy only dependency manifests first (leverages Docker layer caching) ----
+COPY pyproject.toml poetry.lock* ./
+
+# ---- Install Python deps (no dev deps) ----
+RUN apk add --no-cache --virtual .build-deps build-base python3-dev postgresql-dev \
+    && poetry install --no-root --only main \
+    && apk del .build-deps
+
+# ---- Copy application code ----
+COPY transaction_service ./transaction_service
+COPY common ./common
+COPY proto ./proto
+COPY transaction_service/entrypoint.sh .
+
+EXPOSE 50052 9100
+
+RUN chmod +x entrypoint.sh
+ENTRYPOINT ["./entrypoint.sh"]

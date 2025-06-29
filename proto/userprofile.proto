@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package userprofile;
+
+// ----- User entity ------------------------------------------
+
+message User {
+  string id    = 1;
+  string name  = 2;
+  string email = 3;
+  string role  = 4;   // admin | auditor | finance | user
+}
+
+// ----- Requests / Responses ---------------------------------
+
+message UserRequest {
+  string id = 1;
+}
+
+message UserList {
+  repeated User users = 1;
+}
+
+message Empty {}
+
+// ----- Service ----------------------------------------------
+
+service UserService {
+  // Get a single user by ID
+  rpc GetUser (UserRequest) returns (User);
+
+  // List all users
+  rpc ListUsers (Empty) returns (UserList);
+}

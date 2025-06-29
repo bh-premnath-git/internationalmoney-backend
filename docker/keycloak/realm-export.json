@@ -1,0 +1,129 @@
+{
+  "realm": "money-transfer",
+  "enabled": true,
+  "clients": [
+    {
+      "clientId": "gateway-client",
+      "enabled": true,
+      "publicClient": true,
+      "redirectUris": ["*"],
+      "protocol": "openid-connect",
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": true,
+      "serviceAccountsEnabled": false,
+      "bearerOnly": false,
+      "baseUrl": "http://localhost"
+    }
+  ],
+  "clientScopes": [
+    {
+      "name": "profile",
+      "protocol": "openid-connect",
+      "attributes": {
+        "includeInTokenScope": true,
+        "displayOnConsentScreen": true
+      }
+    },
+    {
+      "name": "email",
+      "protocol": "openid-connect",
+      "attributes": {
+        "includeInTokenScope": true,
+        "displayOnConsentScreen": true
+      }
+    },
+    {
+      "name": "roles",
+      "protocol": "openid-connect",
+      "attributes": {
+        "includeInTokenScope": true,
+        "displayOnConsentScreen": false
+      }
+    }
+  ],
+  "roles": {
+    "realm": [
+      { "name": "admin", "description": "Full admin access" },
+      { "name": "auditor", "description": "Read-only access to logs and transactions" },
+      { "name": "finance", "description": "Can approve and review financial transactions" },
+      { "name": "user", "description": "Basic user with limited permissions" }
+    ]
+  },
+  "users": [
+    {
+      "username": "admin@example.com",
+      "enabled": true,
+      "emailVerified": true,
+      "email": "admin@example.com",
+      "credentials": [
+        { "type": "password", "value": "admin123", "temporary": false }
+      ],
+      "realmRoles": ["admin"]
+    },
+    {
+      "username": "auditor@example.com",
+      "enabled": true,
+      "emailVerified": true,
+      "email": "auditor@example.com",
+      "credentials": [
+        { "type": "password", "value": "auditor123", "temporary": false }
+      ],
+      "realmRoles": ["auditor"]
+    },
+    {
+      "username": "finance@example.com",
+      "enabled": true,
+      "emailVerified": true,
+      "email": "finance@example.com",
+      "credentials": [
+        { "type": "password", "value": "finance123", "temporary": false }
+      ],
+      "realmRoles": ["finance"]
+    },
+    {
+      "username": "user@example.com",
+      "enabled": true,
+      "emailVerified": true,
+      "email": "user@example.com",
+      "credentials": [
+        { "type": "password", "value": "user123", "temporary": false }
+      ],
+      "realmRoles": ["user"]
+    }
+  ],
+  "groups": [
+    {
+      "name": "admins",
+      "path": "/admins",
+      "realmRoles": ["admin"],
+      "attributes": {
+        "description": ["Group for administrators"]
+      }
+    },
+    {
+      "name": "auditors",
+      "path": "/auditors",
+      "realmRoles": ["auditor"],
+      "attributes": {
+        "description": ["Group for auditors"]
+      }
+    },
+    {
+      "name": "finance",
+      "path": "/finance",
+      "realmRoles": ["finance"],
+      "attributes": {
+        "description": ["Group for finance team"]
+      }
+    },
+    {
+      "name": "users",
+      "path": "/users",
+      "realmRoles": ["user"],
+      "attributes": {
+        "description": ["Group for regular users"]
+      }
+    }
+  ]
+}

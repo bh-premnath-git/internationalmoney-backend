@@ -1,0 +1,5 @@
+# role, domain, resource, action
+admin, global, *, (get)|(post)|(put)|(delete)
+auditor, global, transaction, get
+finance, global, transaction, (get)|(post)
+user, global, user, get

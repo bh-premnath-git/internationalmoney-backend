@@ -1,0 +1,55 @@
+syntax = "proto3";
+
+package banktransaction;
+
+// ----- Transaction entity -----------------------------------
+
+message Transaction {
+  string id        = 1;
+  string from_user = 2;
+  string to_user   = 3;
+  double amount    = 4;
+  string currency  = 5;
+  string status    = 6;  // PENDING | COMPLETED | FAILED
+  int64  ts_epoch  = 7;  // milliseconds since epoch
+}
+
+// ----- Requests / Responses ---------------------------------
+
+message CreateTransactionRequest {
+  string from_user = 1;
+  string to_user   = 2;
+  double amount    = 3;
+  string currency  = 4;
+}
+
+message TransactionId {
+  string id = 1;
+}
+
+message TransactionList {
+  repeated Transaction transactions = 1;
+}
+
+message Empty {}
+
+// ----- Service ----------------------------------------------
+
+service TransactionService {
+  // Create a new transaction
+  rpc CreateTransaction (CreateTransactionRequest) returns (Transaction);
+
+  // Get one transaction by ID
+  rpc GetTransaction (TransactionId) returns (Transaction);
+
+  // List all transactions for a user
+  rpc ListTransactionsForUser (UserId) returns (TransactionList);
+
+  // Ping (health check)
+  rpc Ping (Empty) returns (Empty);
+}
+
+// Helper message (re-used)
+message UserId {
+  string id = 1;
+}
