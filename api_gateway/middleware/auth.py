@@ -6,7 +6,7 @@ from typing import Any, Dict
 
 from fastapi import Request
 from fastapi.responses import JSONResponse
-from casbin import Enforcer
+from casbin import AsyncEnforcer
 from jwt import PyJWKClient, decode as jwt_decode
 import cachetools
 
@@ -16,8 +16,8 @@ settings = get_settings()
 _jwk_client = PyJWKClient(str(settings.JWKS_URL))
 _cache: Dict[str, Any] = cachetools.TTLCache(maxsize=32, ttl=3600)
 
-enforcer = Enforcer(model_path="api_gateway/rbac/model.conf",
-                    adapter="api_gateway/rbac/policy.csv")
+enforcer = AsyncEnforcer(model="api_gateway/rbac/model.conf",
+                         adapter="api_gateway/rbac/policy.csv")
 
 
 async def auth_middleware(request: Request, call_next):
@@ -39,7 +39,7 @@ async def auth_middleware(request: Request, call_next):
     role = claims.get("realm_access", {}).get("roles", ["user"])[0]
     obj = request.url.path.split("/")[1] or "*"
     act = request.method.lower()
-    if not enforcer.enforce(role, "global", obj, act):
+    if not await enforcer.enforce(role, "global", obj, act):
         return JSONResponse({"detail": "Forbidden"}, status_code=403)
 
     # Pass user on downstream

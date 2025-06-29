@@ -40,27 +40,28 @@ if (-not (Get-Command poetry -ErrorAction SilentlyContinue)) {
     Log-Message "Installing Poetry locally..."
     $installerScript = (Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content
     $installerScript | & $pythonBin -
-    
+
     # Add poetry to the PATH for the current session.
-    # The installer places it in %APPDATA%\Python\Scripts on Windows.
-    $poetryPath = "$env:APPDATA\Python\Scripts"
+    # The modern installer places it in %APPDATA%\pypoetry\venv\Scripts on Windows.
+    $poetryPath = "$env:APPDATA\pypoetry\venv\Scripts"
     $env:PATH = "$poetryPath;$env:PATH"
 }
 
 # 2. Create venv only inside project
 Log-Message "Creating local Poetry virtualenv..."
 poetry config virtualenvs.in-project true
-Log-Message "Updating lock file if needed..."
+Log-Message "Ensuring lock file is up to date..."
 poetry lock
 Log-Message "Installing dependencies..."
 poetry install --no-root --no-interaction --with dev
-poetry sync
 
 # 3. Generate gRPC stubs
 Log-Message "Generating gRPC stubs..."
 Log-Message "Finding venv Python to bypass fnm..."
 $venv_python = (poetry env info --path) + "\Scripts\python.exe"
-& $venv_python -m grpc_tools.protoc -I . --python_out=. --grpc_python_out=. proto/userprofile.proto proto/banktransaction.proto
+$proto_files = Get-ChildItem -Path proto -Filter *.proto | ForEach-Object { Join-Path 'proto' $_.Name }
+Log-Message "Found proto files: $($proto_files -join ', ')"
+& $venv_python -m grpc_tools.protoc -I . --python_out=. --grpc_python_out=. $proto_files
 
 # 4. Build and run stack
 Log-Message "Launching Docker stack..."

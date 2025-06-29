@@ -31,14 +31,16 @@ fi
 # 2️⃣ Create venv only inside project
 log "Creating local Poetry virtualenv …"
 poetry config virtualenvs.in-project true
-log "Updating lock file if needed …"
+log "Ensuring lock file is up to date..."
 poetry lock
+log "Installing dependencies..."
 poetry install --no-root --no-interaction --with dev
-poetry sync
 
 # 3️⃣ Generate gRPC stubs
 log "Generating gRPC stubs …"
-poetry run python -m grpc_tools.protoc -I . --python_out=. --grpc_python_out=. proto/userprofile.proto proto/banktransaction.proto
+proto_files=$(find proto -name "*.proto")
+log "Found proto files: $proto_files"
+poetry run python -m grpc_tools.protoc -I . --python_out=. --grpc_python_out=. $proto_files
 
 # 4️⃣ Build and run stack
 log "Launching Docker stack …"

@@ -20,9 +20,8 @@ Grafana → http://localhost:3000
 | Service             | gRPC Port | Metrics Port      | Exposed Ports (Compose)      | Notes                |
 |---------------------|-----------|-------------------|------------------------------|----------------------|
 | user_service        | 50051     | 9100              | 50051:50051, 9100:9100       | OK                   |
-| transaction_service | 50052     | 9101 (→ 9100)     | 50052:50052, 9101:9100       | Slight inconsistency |
+| transaction_service | 50052     | 9101 (→ 9100)     | 50052:50052, 9101:9100       | Metrics port mapped to avoid conflict |
 | gateway             | 8000      | –                 | 8000:8000                    | OK                   |
 | keycloak            | 8080      | –                 | 8080:8080                    | OK                   |
 | prometheus          | 9090      | –                 | 9090:9090                    | OK                   |
 | grafana             | 3000      | –                 | 3000:3000                    | OK                   |
-

@@ -1524,6 +1524,30 @@ files = [
 typing-extensions = ">=4.6.0,<4.7.0 || >4.7.0"
 
 [[package]]
+name = "pydantic-settings"
+version = "2.10.1"
+description = "Settings management using Pydantic"
+optional = false
+python-versions = ">=3.9"
+groups = ["main"]
+files = [
+    {file = "pydantic_settings-2.10.1-py3-none-any.whl", hash = "sha256:a60952460b99cf661dc25c29c0ef171721f98bfcb52ef8d9ea4c943d7c8cc796"},
+    {file = "pydantic_settings-2.10.1.tar.gz", hash = "sha256:06f0062169818d0f5524420a360d632d5857b83cffd4d42fe29597807a1614ee"},
+]
+
+[package.dependencies]
+pydantic = ">=2.7.0"
+python-dotenv = ">=0.21.0"
+typing-inspection = ">=0.4.0"
+
+[package.extras]
+aws-secrets-manager = ["boto3 (>=1.35.0)", "boto3-stubs[secretsmanager]"]
+azure-key-vault = ["azure-identity (>=1.16.0)", "azure-keyvault-secrets (>=4.8.0)"]
+gcp-secret-manager = ["google-cloud-secret-manager (>=2.23.1)"]
+toml = ["tomli (>=2.0.1)"]
+yaml = ["pyyaml (>=6.0.1)"]
+
+[[package]]
 name = "pygments"
 version = "2.19.2"
 description = "Pygments is a syntax highlighting package written in Python."
@@ -1963,14 +1987,14 @@ full = ["httpx (>=0.22.0)", "itsdangerous", "jinja2", "python-multipart (>=0.0.7
 
 [[package]]
 name = "strawberry-graphql"
-version = "0.233.3"
+version = "0.234.3"
 description = "A library for creating GraphQL APIs"
 optional = false
 python-versions = "<4.0,>=3.8"
 groups = ["main"]
 files = [
-    {file = "strawberry_graphql-0.233.3-py3-none-any.whl", hash = "sha256:3dba75469efd5a66aee051c66ddf4b35f48a0b118f2d67ec0284f33dbf915ef3"},
-    {file = "strawberry_graphql-0.233.3.tar.gz", hash = "sha256:43054f4438ea850e7a52307997fd8f08e420dd931f519bbb98ecc2734611d8b4"},
+    {file = "strawberry_graphql-0.234.3-py3-none-any.whl", hash = "sha256:1db96a1cdc0a2d4645488110f92aa4302cc30acc2ce72061a1a0f6e17fa192a8"},
+    {file = "strawberry_graphql-0.234.3.tar.gz", hash = "sha256:9beb5ef9b902735fba15e18472a6c53ff74a0c77ab06dbc183e90db08939b59a"},
 ]
 
 [package.dependencies]
@@ -2467,4 +2491,4 @@ type = ["pytest-mypy"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.12"
-content-hash = "6578d2ad6ef765e27dddc50a5c5d941da3ed93cf4d124c54effa2f8b5510571d"
+content-hash = "3fa7d62c9f728d5fd7f0a2d39eac96081c5931b66171d1f170029063071e23f8"
