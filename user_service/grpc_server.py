@@ -2,8 +2,8 @@ import asyncio
 import grpc
 from prometheus_client import Counter, Histogram, start_http_server
 from proto import userprofile_pb2, userprofile_pb2_grpc
-from common.events.kafka import init_events, publish
-from .service import UserService
+from common.events.kafka import close_events, init_events, publish
+from .app.service import UserService
 
 REQ = Counter("user_grpc_requests_total", "Requests", ["method"])
 LAT = Histogram("user_grpc_latency_seconds", "Latency", ["method"])
@@ -32,12 +32,15 @@ class UserRPC(userprofile_pb2_grpc.UserServiceServicer):
 
 async def serve():
     start_http_server(9100)  # Prometheus
-    async with init_events():  # Kafka producer
-        server = grpc.aio.server()
-        userprofile_pb2_grpc.add_UserServiceServicer_to_server(UserRPC(), server)
-        server.add_insecure_port("[::]:50051")
-        await server.start()
+    await init_events()  # Kafka producer
+    server = grpc.aio.server()
+    userprofile_pb2_grpc.add_UserServiceServicer_to_server(UserRPC(), server)
+    server.add_insecure_port("[::]:50051")
+    await server.start()
+    try:
         await server.wait_for_termination()
+    finally:
+        await close_events()
 
 
 if __name__ == "__main__":

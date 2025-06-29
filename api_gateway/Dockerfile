@@ -21,6 +21,8 @@ COPY pyproject.toml poetry.lock* ./
 RUN apk add --no-cache --virtual .build-deps build-base python3-dev postgresql-dev zlib-dev\
     && poetry install --no-root --only main \
     && apk del .build-deps
+ENV PATH="/app/.venv/bin:$PATH"
+ENV PYTHONPATH=/app
 
 # ---- Copy application code ----
 COPY api_gateway ./api_gateway

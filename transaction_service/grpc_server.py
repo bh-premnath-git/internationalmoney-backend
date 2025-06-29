@@ -3,7 +3,7 @@ import grpc
 from prometheus_client import Counter, Histogram, start_http_server
 from proto import banktransaction_pb2, banktransaction_pb2_grpc
 from common.events.kafka import close_events, init_events
-from .service import TxService
+from .app.service import TxService
 
 REQ = Counter("tx_grpc_requests_total", "Requests", ["method"])
 LAT = Histogram("tx_grpc_latency_seconds", "Latency", ["method"])

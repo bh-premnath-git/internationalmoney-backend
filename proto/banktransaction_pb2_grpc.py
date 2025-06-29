@@ -3,7 +3,7 @@
 import grpc
 import warnings
 
-import banktransaction_pb2 as banktransaction__pb2
+from proto import banktransaction_pb2 as proto_dot_banktransaction__pb2
 
 GRPC_GENERATED_VERSION = '1.71.2'
 GRPC_VERSION = grpc.__version__
@@ -18,7 +18,7 @@ except ImportError:
 if _version_not_supported:
     raise RuntimeError(
         f'The grpc package installed is at version {GRPC_VERSION},'
-        + f' but the generated code in banktransaction_pb2_grpc.py depends on'
+        + f' but the generated code in proto/banktransaction_pb2_grpc.py depends on'
         + f' grpcio>={GRPC_GENERATED_VERSION}.'
         + f' Please upgrade your grpc module to grpcio>={GRPC_GENERATED_VERSION}'
         + f' or downgrade your generated code using grpcio-tools<={GRPC_VERSION}.'
@@ -38,23 +38,23 @@ class TransactionServiceStub(object):
         """
         self.CreateTransaction = channel.unary_unary(
                 '/banktransaction.TransactionService/CreateTransaction',
-                request_serializer=banktransaction__pb2.CreateTransactionRequest.SerializeToString,
-                response_deserializer=banktransaction__pb2.Transaction.FromString,
+                request_serializer=proto_dot_banktransaction__pb2.CreateTransactionRequest.SerializeToString,
+                response_deserializer=proto_dot_banktransaction__pb2.Transaction.FromString,
                 _registered_method=True)
         self.GetTransaction = channel.unary_unary(
                 '/banktransaction.TransactionService/GetTransaction',
-                request_serializer=banktransaction__pb2.TransactionId.SerializeToString,
-                response_deserializer=banktransaction__pb2.Transaction.FromString,
+                request_serializer=proto_dot_banktransaction__pb2.TransactionId.SerializeToString,
+                response_deserializer=proto_dot_banktransaction__pb2.Transaction.FromString,
                 _registered_method=True)
         self.ListTransactionsForUser = channel.unary_unary(
                 '/banktransaction.TransactionService/ListTransactionsForUser',
-                request_serializer=banktransaction__pb2.UserId.SerializeToString,
-                response_deserializer=banktransaction__pb2.TransactionList.FromString,
+                request_serializer=proto_dot_banktransaction__pb2.UserId.SerializeToString,
+                response_deserializer=proto_dot_banktransaction__pb2.TransactionList.FromString,
                 _registered_method=True)
         self.Ping = channel.unary_unary(
                 '/banktransaction.TransactionService/Ping',
-                request_serializer=banktransaction__pb2.Empty.SerializeToString,
-                response_deserializer=banktransaction__pb2.Empty.FromString,
+                request_serializer=proto_dot_banktransaction__pb2.Empty.SerializeToString,
+                response_deserializer=proto_dot_banktransaction__pb2.Empty.FromString,
                 _registered_method=True)
 
 
@@ -96,23 +96,23 @@ def add_TransactionServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'CreateTransaction': grpc.unary_unary_rpc_method_handler(
                     servicer.CreateTransaction,
-                    request_deserializer=banktransaction__pb2.CreateTransactionRequest.FromString,
-                    response_serializer=banktransaction__pb2.Transaction.SerializeToString,
+                    request_deserializer=proto_dot_banktransaction__pb2.CreateTransactionRequest.FromString,
+                    response_serializer=proto_dot_banktransaction__pb2.Transaction.SerializeToString,
             ),
             'GetTransaction': grpc.unary_unary_rpc_method_handler(
                     servicer.GetTransaction,
-                    request_deserializer=banktransaction__pb2.TransactionId.FromString,
-                    response_serializer=banktransaction__pb2.Transaction.SerializeToString,
+                    request_deserializer=proto_dot_banktransaction__pb2.TransactionId.FromString,
+                    response_serializer=proto_dot_banktransaction__pb2.Transaction.SerializeToString,
             ),
             'ListTransactionsForUser': grpc.unary_unary_rpc_method_handler(
                     servicer.ListTransactionsForUser,
-                    request_deserializer=banktransaction__pb2.UserId.FromString,
-                    response_serializer=banktransaction__pb2.TransactionList.SerializeToString,
+                    request_deserializer=proto_dot_banktransaction__pb2.UserId.FromString,
+                    response_serializer=proto_dot_banktransaction__pb2.TransactionList.SerializeToString,
             ),
             'Ping': grpc.unary_unary_rpc_method_handler(
                     servicer.Ping,
-                    request_deserializer=banktransaction__pb2.Empty.FromString,
-                    response_serializer=banktransaction__pb2.Empty.SerializeToString,
+                    request_deserializer=proto_dot_banktransaction__pb2.Empty.FromString,
+                    response_serializer=proto_dot_banktransaction__pb2.Empty.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -142,8 +142,8 @@ class TransactionService(object):
             request,
             target,
             '/banktransaction.TransactionService/CreateTransaction',
-            banktransaction__pb2.CreateTransactionRequest.SerializeToString,
-            banktransaction__pb2.Transaction.FromString,
+            proto_dot_banktransaction__pb2.CreateTransactionRequest.SerializeToString,
+            proto_dot_banktransaction__pb2.Transaction.FromString,
             options,
             channel_credentials,
             insecure,
@@ -169,8 +169,8 @@ class TransactionService(object):
             request,
             target,
             '/banktransaction.TransactionService/GetTransaction',
-            banktransaction__pb2.TransactionId.SerializeToString,
-            banktransaction__pb2.Transaction.FromString,
+            proto_dot_banktransaction__pb2.TransactionId.SerializeToString,
+            proto_dot_banktransaction__pb2.Transaction.FromString,
             options,
             channel_credentials,
             insecure,
@@ -196,8 +196,8 @@ class TransactionService(object):
             request,
             target,
             '/banktransaction.TransactionService/ListTransactionsForUser',
-            banktransaction__pb2.UserId.SerializeToString,
-            banktransaction__pb2.TransactionList.FromString,
+            proto_dot_banktransaction__pb2.UserId.SerializeToString,
+            proto_dot_banktransaction__pb2.TransactionList.FromString,
             options,
             channel_credentials,
             insecure,
@@ -223,8 +223,8 @@ class TransactionService(object):
             request,
             target,
             '/banktransaction.TransactionService/Ping',
-            banktransaction__pb2.Empty.SerializeToString,
-            banktransaction__pb2.Empty.FromString,
+            proto_dot_banktransaction__pb2.Empty.SerializeToString,
+            proto_dot_banktransaction__pb2.Empty.FromString,
             options,
             channel_credentials,
             insecure,

@@ -1,14 +1,21 @@
 from __future__ import annotations
 
 import asyncio
+import sys
 from logging.config import fileConfig
+from pathlib import Path
 
 from alembic import context
 from sqlalchemy import pool
 from sqlalchemy.ext.asyncio import async_engine_from_config
 
+
+
 from transaction_service.app.models import Base as TransactionBase
 from user_service.app.models import Base as UserBase
+
+# Ensure project root is on the Python path so service modules can be imported
+sys.path.append(str(Path(__file__).resolve().parents[3]))
 
 config = context.config
 fileConfig(config.config_file_name)

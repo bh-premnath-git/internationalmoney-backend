@@ -3,7 +3,7 @@
 import grpc
 import warnings
 
-import userprofile_pb2 as userprofile__pb2
+from proto import userprofile_pb2 as proto_dot_userprofile__pb2
 
 GRPC_GENERATED_VERSION = '1.71.2'
 GRPC_VERSION = grpc.__version__
@@ -18,7 +18,7 @@ except ImportError:
 if _version_not_supported:
     raise RuntimeError(
         f'The grpc package installed is at version {GRPC_VERSION},'
-        + f' but the generated code in userprofile_pb2_grpc.py depends on'
+        + f' but the generated code in proto/userprofile_pb2_grpc.py depends on'
         + f' grpcio>={GRPC_GENERATED_VERSION}.'
         + f' Please upgrade your grpc module to grpcio>={GRPC_GENERATED_VERSION}'
         + f' or downgrade your generated code using grpcio-tools<={GRPC_VERSION}.'
@@ -38,13 +38,13 @@ class UserServiceStub(object):
         """
         self.GetUser = channel.unary_unary(
                 '/userprofile.UserService/GetUser',
-                request_serializer=userprofile__pb2.UserRequest.SerializeToString,
-                response_deserializer=userprofile__pb2.User.FromString,
+                request_serializer=proto_dot_userprofile__pb2.UserRequest.SerializeToString,
+                response_deserializer=proto_dot_userprofile__pb2.User.FromString,
                 _registered_method=True)
         self.ListUsers = channel.unary_unary(
                 '/userprofile.UserService/ListUsers',
-                request_serializer=userprofile__pb2.Empty.SerializeToString,
-                response_deserializer=userprofile__pb2.UserList.FromString,
+                request_serializer=proto_dot_userprofile__pb2.Empty.SerializeToString,
+                response_deserializer=proto_dot_userprofile__pb2.UserList.FromString,
                 _registered_method=True)
 
 
@@ -72,13 +72,13 @@ def add_UserServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'GetUser': grpc.unary_unary_rpc_method_handler(
                     servicer.GetUser,
-                    request_deserializer=userprofile__pb2.UserRequest.FromString,
-                    response_serializer=userprofile__pb2.User.SerializeToString,
+                    request_deserializer=proto_dot_userprofile__pb2.UserRequest.FromString,
+                    response_serializer=proto_dot_userprofile__pb2.User.SerializeToString,
             ),
             'ListUsers': grpc.unary_unary_rpc_method_handler(
                     servicer.ListUsers,
-                    request_deserializer=userprofile__pb2.Empty.FromString,
-                    response_serializer=userprofile__pb2.UserList.SerializeToString,
+                    request_deserializer=proto_dot_userprofile__pb2.Empty.FromString,
+                    response_serializer=proto_dot_userprofile__pb2.UserList.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -108,8 +108,8 @@ class UserService(object):
             request,
             target,
             '/userprofile.UserService/GetUser',
-            userprofile__pb2.UserRequest.SerializeToString,
-            userprofile__pb2.User.FromString,
+            proto_dot_userprofile__pb2.UserRequest.SerializeToString,
+            proto_dot_userprofile__pb2.User.FromString,
             options,
             channel_credentials,
             insecure,
@@ -135,8 +135,8 @@ class UserService(object):
             request,
             target,
             '/userprofile.UserService/ListUsers',
-            userprofile__pb2.Empty.SerializeToString,
-            userprofile__pb2.UserList.FromString,
+            proto_dot_userprofile__pb2.Empty.SerializeToString,
+            proto_dot_userprofile__pb2.UserList.FromString,
             options,
             channel_credentials,
             insecure,

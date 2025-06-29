@@ -60,7 +60,7 @@ poetry sync
 Log-Message "Generating gRPC stubs..."
 Log-Message "Finding venv Python to bypass fnm..."
 $venv_python = (poetry env info --path) + "\Scripts\python.exe"
-& $venv_python -m grpc_tools.protoc -I proto --python_out=proto --grpc_python_out=proto proto/userprofile.proto proto/banktransaction.proto
+& $venv_python -m grpc_tools.protoc -I . --python_out=. --grpc_python_out=. proto/userprofile.proto proto/banktransaction.proto
 
 # 4. Build and run stack
 Log-Message "Launching Docker stack..."

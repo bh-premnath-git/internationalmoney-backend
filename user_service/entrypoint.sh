@@ -5,4 +5,4 @@ echo "📦 Running Alembic migration..."
 alembic upgrade head
 
 echo "🚀 Starting gRPC service..."
-exec python grpc_server.py
+exec python -m user_service.grpc_server

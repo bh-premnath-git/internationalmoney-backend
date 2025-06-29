@@ -17,10 +17,12 @@ RUN apk add --no-cache --virtual .build-deps build-base python3-dev postgresql-d
     && poetry install --no-root --only main \
     && apk del .build-deps
 
+ENV PYTHONPATH=/app
 ENV PATH="/app/.venv/bin:$PATH"
 
 # ---- Copy application code ----
 COPY transaction_service ./transaction_service
+COPY user_service ./user_service
 COPY common ./common
 COPY proto ./proto
 COPY transaction_service/entrypoint.sh .
