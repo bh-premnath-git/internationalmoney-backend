@@ -65,8 +65,8 @@ Log-Message "Found proto files: $($proto_files -join ', ')"
 
 # 4. Build and run stack
 Log-Message "Launching Docker stack..."
-docker compose -f $composeFile build --quiet
-docker compose -f $composeFile up -d
+docker compose -f $composeFile build --quiet --pull --no-cache
+docker compose -f $composeFile up -d --remove-orphans
 
 Log-Message "✅ Stack is running!"
 Write-Host "➡️  REST + GraphQL: http://localhost:8000"
